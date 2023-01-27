@@ -1,40 +1,56 @@
 import { Link } from 'react-router-dom'
+import { Navbar } from 'react-bulma-components'
+import classnames from 'classnames'
+export default function SideBar({ currentUser, handleLogout }) {
+	const loggedIn = (
+		<Navbar className='is-static-left'>
+			<Navbar.Brand></Navbar.Brand>
 
-export default function Navbar({ currentUser, handleLogout }) {
-	 const loggedIn = (
-		<>
 			{/* if the user is logged in... */}
 			<Link to="/">
-				<span onClick={handleLogout}>logout</span>
+				<p>Home</p>
+			</Link>
+
+			<Link to="/">
+				<span onClick={handleLogout}>Logout</span>
 			</Link>
 
 			<Link to="/profile">
-				profile
+				Profile
 			</Link>
-		</>
-	 )
+		</Navbar>
 
-	 const loggedOut = (
-		<>
+
+	)
+
+	const loggedOut = (
+		<aside className='menu'>
+			<ul className='menu-list'>
+				<li>
+					<Link to="/">
+						<p>Home</p>
+					</Link>
+				</li>
+				<li>
+					<Link to="/register">
+						Register
+					</Link>
+				</li>
+				<li>
+					<Link to="/login">
+						Login
+					</Link>
+				</li>
+			</ul>
+
 			{/* if the user is not logged in... */}
-			<Link to="/register">
-				register
-			</Link>
-
-			<Link to="/login">
-				login
-			</Link>
-		</>
-	 )
+		</aside>
+	)
 
 	return (
-		<nav>
-			{/* user always sees this section */}
-			<Link to="/">
-				<p>User App</p>
-			</Link>
-
+		<>
 			{currentUser ? loggedIn : loggedOut}
-		</nav>
+		</>
+
 	)
 }

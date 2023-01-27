@@ -9,7 +9,8 @@ import Login from './components/pages/Login'
 import Profile from './components/pages/Profile'
 import Register from './components/pages/Register'
 import Welcome from './components/pages/Welcome'
-import Navbar from './components/Navbar'
+import SideBar from './components/Navbar'
+import 'bulma/css/bulma.css'
 import './App.css'
 import jwt_decode from 'jwt-decode'
 
@@ -43,7 +44,7 @@ function App() {
   return (
     <Router>
       <header>
-        <Navbar 
+        <SideBar
           currentUser={currentUser}
           handleLogout={handleLogout}
         />
@@ -51,17 +52,17 @@ function App() {
 
       <div className="App">
         <Routes>
-          <Route 
+          <Route
             path="/"
             element={<Welcome />}
           />
 
-          <Route 
+          <Route
             path="/register"
             element={<Register currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
 
-          <Route 
+          <Route
             path="/login"
             element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
@@ -74,7 +75,7 @@ function App() {
             /> 
 		  */}
 
-          <Route 
+          <Route
             path="/profile"
             element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
