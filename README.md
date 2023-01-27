@@ -38,12 +38,12 @@ Socket.IO is a JavaScript library that enables real-time, bidirectional communic
     - Netlify
 
 # ERD
-![ERD](../img/Screenshot%202023-01-27%20at%208.59.44%20AM.png)
+![ERD](./img/Screenshot%202023-01-27%20at%208.59.44%20AM.png)
 # RESTful Routing
-![Restful chart](../img/Screenshot%202023-01-27%20at%209.00.22%20AM.png)
+![Restful chart](./img/Screenshot%202023-01-27%20at%209.00.22%20AM.png)
 # Wireframing
-![Wireframe 1](../img/Screenshot%202023-01-27%20at%209.14.16%20AM.png)
-![Wireframe 2](../img/Screenshot%202023-01-27%20at%209.14.27%20AM.png)
+![Wireframe 1](./img/Screenshot%202023-01-27%20at%209.14.16%20AM.png)
+![Wireframe 2](./img/Screenshot%202023-01-27%20at%209.14.27%20AM.png)
 # MVP Goals
 ### The MVP for CHAPPIE is: 
 - Allow users to create accounts, and allow them to be personally customizable..
