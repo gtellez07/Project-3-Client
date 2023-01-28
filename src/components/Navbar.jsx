@@ -3,8 +3,7 @@ import { Navbar } from 'react-bulma-components'
 import classnames from 'classnames'
 export default function SideBar({ currentUser, handleLogout }) {
 	const loggedIn = (
-		<Navbar className='is-static-left'>
-			<Navbar.Brand></Navbar.Brand>
+		<aside className='menu'>
 
 			{/* if the user is logged in... */}
 			<Link to="/">
@@ -18,9 +17,8 @@ export default function SideBar({ currentUser, handleLogout }) {
 			<Link to="/profile">
 				Profile
 			</Link>
-		</Navbar>
 
-
+		</aside>
 	)
 
 	const loggedOut = (
