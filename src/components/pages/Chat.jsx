@@ -5,7 +5,7 @@ export default function Chat() {
   const [currentUserComment, setCurrentUserComment] = useState([]);
   const [comment, setComment] = useState("");
   const [otherUserComment, setOtherUserComment] = useState([]);
-  
+
   const message = (e) => {
     e.preventDefault();
     console.log(e);
@@ -18,7 +18,7 @@ export default function Chat() {
       setOtherUserComment([...otherUserComment, comment.comment]);
       //alert(comment.comment)
     });
-  }, [socket]);
+  }, []);
 
   let currentUserComments = currentUserComment.map((comment, idx) => {
     return (
