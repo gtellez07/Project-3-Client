@@ -17,7 +17,7 @@ export default function Register({ currentUser, setCurrentUser }) {
 			// post fortm data to the backend
 			const reqBody = {
 				name,
-				email, 
+				email,
 				password
 			}
 			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/register`, reqBody)
@@ -38,7 +38,7 @@ export default function Register({ currentUser, setCurrentUser }) {
 				setMsg(err.response.data.msg)
 			}
 		}
- 	}
+	}
 
 	// conditionally render a navigate component
 	if (currentUser) {
@@ -47,40 +47,52 @@ export default function Register({ currentUser, setCurrentUser }) {
 
 	return (
 		<div>
-			<h1>Register for an account:</h1>
+			<div className='field is-grouped is-grouped-centered'>
+				<div className='title is-1'>
+					Register for An Account
+					<p>{msg}</p>
+				</div>
 
-			<p>{msg}</p>
+			</div>
+			<div className='field is-grouped is-grouped-centered'>
+				<form onSubmit={handleSubmit}>
+					<label className='label' htmlFor='name'>Name:</label>
+					<div className='field'>
+						<input
+							className='input is-primary'
+							type="text"
+							id="name"
+							placeholder='Your username...'
+							onChange={e => setName(e.target.value)}
+							value={name}
+						/>
+					</div>
 
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='name'>Name:</label>
-				<input 
-					type="text"
-					id="name"
-					placeholder='your username...'
-					onChange={e => setName(e.target.value)}
-					value={name}
-				/>
+					<label className='label' htmlFor='email'>Email:</label>
+					<input
+						className='input is-primary'
+						type="email"
+						id="email"
+						placeholder='Your email...'
+						onChange={e => setEmail(e.target.value)}
+						value={email}
+					/>
 
-				<label htmlFor='email'>Email:</label>
-				<input 
-					type="email"
-					id="email"
-					placeholder='your email...'
-					onChange={e => setEmail(e.target.value)}
-					value={email}
-				/>
+					<label className='label' htmlFor='password'>Password:</label>
+					<input
+						className='input is-primary'
+						type="password"
+						id="password"
+						placeholder='Password...'
+						onChange={e => setPassword(e.target.value)}
+						value={password}
+					/>
+					<div className='field is-grouped is-grouped-centered'>
 
-				<label htmlFor='password'>Password:</label>
-				<input 
-					type="password"
-					id="password"
-					placeholder='password...'
-					onChange={e => setPassword(e.target.value)}
-					value={password}
-				/>
-
-				<button type="submit">Register</button>
-			</form>
+						<button className='button is-small has-background-primary' type="submit">Register</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	)
 }
