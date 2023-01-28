@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { Navigate } from 'react-router-dom'
+import classNames from 'classnames'
 
 export default function Login({ currentUser, setCurrentUser }) {
 	// state for the controlled form
@@ -15,7 +16,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 		try {
 			// post fortm data to the backend
 			const reqBody = {
-				email, 
+				email,
 				password
 			}
 			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/login`, reqBody)
@@ -36,7 +37,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 				setMsg(err.response.data.msg)
 			}
 		}
- 	}
+	}
 
 	// conditionally render a navigate component
 	if (currentUser) {
@@ -45,31 +46,46 @@ export default function Login({ currentUser, setCurrentUser }) {
 
 	return (
 		<div>
-			<h1>Login to Your Account:</h1>
+			<div className='field is-grouped is-grouped-centered'>
+				<div className='title is-1'>
+					Login to Your Account
 
-			<p>{msg}</p>
+					<p>{msg}</p>
+				</div>
 
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='email'>Email:</label>
-				<input 
-					type="email"
-					id="email"
-					placeholder='your email...'
-					onChange={e => setEmail(e.target.value)}
-					value={email}
-				/>
+			</div>
+			<div className='field is-grouped is-grouped-centered'>
 
-				<label htmlFor='password'>Password:</label>
-				<input 
-					type="password"
-					id="password"
-					placeholder='password...'
-					onChange={e => setPassword(e.target.value)}
-					value={password}
-				/>
+				<form onSubmit={handleSubmit}>
+					<label className='label' htmlFor='email'>Email:</label>
+					<div className='field '>
+						<input
+							className='input is-primary'
+							autoComplete="off"
+							type="email"
+							id="email"
+							placeholder='Your email...'
+							onChange={e => setEmail(e.target.value)}
+							value={email}
+						/>
+					</div>
 
-				<button type="submit">Login</button>
-			</form>
-		</div>
+					<label className='label' htmlFor='password'>Password:</label>
+					<div className='field'>
+						<input
+							className='input is-primary'
+							type="password"
+							id="password"
+							placeholder='Password...'
+							onChange={e => setPassword(e.target.value)}
+							value={password}
+						/>
+					</div>
+					<div className='field is-grouped is-grouped-centered'>
+						<button className='button is-small has-background-primary' type="submit">Login</button>
+					</div>
+				</form>
+			</div>
+		</div >
 	)
 }

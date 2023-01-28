@@ -20,6 +20,5 @@ export default function Chat() {
 			/>
 			</form>
 			<button onClick={message}>connect</button>
-		</div>
 	)
 }
