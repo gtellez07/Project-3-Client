@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 import Login from './components/pages/Login'
 import Profile from './components/pages/Profile'
 import Register from './components/pages/Register'
-import Welcome from './components/pages/Welcome'
+import Chat from './components/pages/Chat'
 import SideBar from './components/Navbar'
 import 'bulma/css/bulma.css'
 import './App.css'
@@ -54,7 +54,7 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={<Welcome />}
+            element={<Chat />}
           />
 
           <Route
