@@ -19,7 +19,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 				email,
 				password
 			}
-			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, reqBody)
+			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, reqBody)
 
 			// save the token in localstorage
 			const { token } = response.data
@@ -41,7 +41,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 
 	// conditionally render a navigate component
 	if (currentUser) {
-		return <Navigate to="/profile" />
+		return <Navigate to="/" />
 	}
 
 	return (
@@ -86,6 +86,6 @@ export default function Login({ currentUser, setCurrentUser }) {
 					</div>
 				</form>
 			</div>
-		</div >
+		</div>
 	)
 }
