@@ -6,49 +6,48 @@ export default function Chat() {
   const [currentUserComment, setCurrentUserComment] = useState([]);
   const [comment, setComment] = useState("");
   const [otherUserComment, setOtherUserComment] = useState([]);
-  const [search,setSearch] = useState('')
-  const[showSearch,setShowSearch]= useState(false)
-  const [data,setData] = useState([])
-  const [chatRoom, setChatRoom]= useState('')
+  const [search, setSearch] = useState('')
+  const [showSearch, setShowSearch] = useState(false)
+  const [list, setList] = useState({})
+  const [chatRoom, setChatRoom] = useState('')
 
   const message = (e) => {
     e.preventDefault();
     console.log(e);
     setCurrentUserComment([...currentUserComment, comment]);
-    socket.emit("send-comment", { comment: currentUserComment, room:chatRoom });
+    socket.emit("send-comment", { comment: currentUserComment, room: chatRoom });
   };
 
-  const handleSearch = async (e)=>{
+  const handleSearch = async (e) => {
     e.preventDefault()
-    try{
+    try {
       const searchFor = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats?search=${search}`)
-      console.log(searchFor.data)
       setShowSearch(!showSearch)
-      searchFor.data.forEach((search)=>{
-        console.log(search, "hihfidhfd")
-        // let newSearch = [...data,search]
-        let newSearch = data.push(search)
-        setData(newSearch)
-        
+      const searchList = searchFor.data.map((search) => {
+        return (
+          <div key={search._id}>
+            {search.title}
+          </div>
+        )
       })
-      console.log(data,"⚠️⚠️⚠️⚠️⚠️")
-      
-      //setData(searchFor.data)
-    }catch(err){
+      setList(searchList)
+
+    } catch (err) {
       console.warn(err)
     }
   }
 
-  const findChat = async (id)=>{
-    try{
+  const findChat = async (id) => {
+    try {
       const chat = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}`)
       setChatRoom(`${chat?.data?._id}`)
-      socket.emit('join-chat',`${chat?.data?._id}`)
+      socket.emit('join-chat', `${chat?.data?._id}`)
       console.log(chat.data)
-    }catch(err){
+    } catch (err) {
       console.warn(err)
     }
   }
+
 
   useEffect(() => {
     socket.on("receive-comment", (comment) => {
@@ -72,19 +71,6 @@ export default function Chat() {
     );
   });
 
-  // const searchResults = data.map((search)=>{
-  //   return(
-  //     <div onClick={()=>findChat(search._id)} key={`chatroom-${search._id}`}>
-  //       <p>{search.title}</p>
-  //     </div>
-  //   )
-  // })
-   let searchResults
-  for(let i in data){
-    console.log(data[i])
-  }
-  console.log(data)
-
   return (
     <div className="home">
       <form onSubmit={handleSearch}>
@@ -94,13 +80,17 @@ export default function Chat() {
           id="search"
           type='text'
           value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-          />
-          <button type="submit">Search</button>
+          placeholder='Look for a chat!'
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button type="submit">Search</button>
       </form>
-      {searchResults}
+
+      {showSearch ? list : null}
+
+
       <h1>
-        <strong>{data?.title}</strong>
+        <strong>{list?.title}</strong>
       </h1>
       <p>your comment:</p>
       {currentUserComments}
@@ -115,7 +105,7 @@ export default function Chat() {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-      <button type = 'submit' >connect</button>
+        <button type='submit' >connect</button>
       </form>
     </div>
   );
