@@ -86,6 +86,6 @@ export default function Login({ currentUser, setCurrentUser }) {
 					</div>
 				</form>
 			</div>
-		</div >
+		</div>
 	)
 }
