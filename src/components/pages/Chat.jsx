@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios'
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
@@ -10,10 +11,11 @@ export default function Chat() {
   const [showSearch, setShowSearch] = useState(false)
   const [list, setList] = useState({})
   const [chatRoom, setChatRoom] = useState('')
+  let navigate = useNavigate();
 
   const message = async (e) => {
     e.preventDefault();
-    console.log(e);
+    console.log(chatRoom);
     setCurrentUserComment([...currentUserComment, comment]);
     socket.emit("send-comment", { comment: currentUserComment, room: chatRoom });
     try {
@@ -34,7 +36,14 @@ export default function Chat() {
         return (
           <div key={search._id} onClick={() => joinChat(search._id)}>
             {search.title}
+            {/* <redirect
+          to={{
+          pathname: `/chat-room/${chatRoom}`,
+          state: { }
+          }}
+        /> */}
           </div>
+
         )
       })
       setList(searchList)
@@ -46,23 +55,15 @@ export default function Chat() {
 
   const joinChat = async (id) => {
     try {
-      setChatRoom(`${id}`)
+      setChatRoom(id)
       socket.emit('join-chat', `${id}`)
       console.log(id)
     } catch (err) {
       console.warn(err)
     }
+    console.log(chatRoom)
+    navigate(`/chat-room/${id}`)
   }
-
-  // const commentList = async function () {
-  //   try {
-  //     const comment = await axios.post(`${process.env.REACT_APP_SERVER_URL}`)
-
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
-
 
   useEffect(() => {
     socket.on("receive-comment", (comment) => {
