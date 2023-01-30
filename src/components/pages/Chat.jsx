@@ -9,12 +9,13 @@ export default function Chat() {
   const [search,setSearch] = useState('')
   const[showSearch,setShowSearch]= useState(false)
   const [data,setData] = useState([])
+  const [chatRoom, setChatRoom]= useState('')
 
   const message = (e) => {
     e.preventDefault();
     console.log(e);
     setCurrentUserComment([...currentUserComment, comment]);
-    socket.emit("send-comment", { comment: currentUserComment });
+    socket.emit("send-comment", { comment: currentUserComment, room:chatRoom });
   };
 
   const handleSearch = async (e)=>{
@@ -23,7 +24,16 @@ export default function Chat() {
       const searchFor = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats?search=${search}`)
       console.log(searchFor.data)
       setShowSearch(!showSearch)
-      setData(searchFor.data)
+      searchFor.data.forEach((search)=>{
+        console.log(search, "hihfidhfd")
+        // let newSearch = [...data,search]
+        let newSearch = data.push(search)
+        setData(newSearch)
+        
+      })
+      console.log(data,"⚠️⚠️⚠️⚠️⚠️")
+      
+      //setData(searchFor.data)
     }catch(err){
       console.warn(err)
     }
@@ -32,6 +42,8 @@ export default function Chat() {
   const findChat = async (id)=>{
     try{
       const chat = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}`)
+      setChatRoom(`${chat?.data?._id}`)
+      socket.emit('join-chat',`${chat?.data?._id}`)
       console.log(chat.data)
     }catch(err){
       console.warn(err)
@@ -60,13 +72,25 @@ export default function Chat() {
     );
   });
 
-  
+  // const searchResults = data.map((search)=>{
+  //   return(
+  //     <div onClick={()=>findChat(search._id)} key={`chatroom-${search._id}`}>
+  //       <p>{search.title}</p>
+  //     </div>
+  //   )
+  // })
+   let searchResults
+  for(let i in data){
+    console.log(data[i])
+  }
+  console.log(data)
 
   return (
     <div className="home">
       <form onSubmit={handleSearch}>
         <label htmlFor="search">Search Chat: </label>
         <input
+          autoComplete="off"
           id="search"
           type='text'
           value={search}
@@ -74,11 +98,9 @@ export default function Chat() {
           />
           <button type="submit">Search</button>
       </form>
-      <div onClick={()=>findChat(data._id)}>
-      <p>{data.title}</p>
-      </div>
+      {searchResults}
       <h1>
-        <strong>Chat Room</strong>
+        <strong>{data?.title}</strong>
       </h1>
       <p>your comment:</p>
       {currentUserComments}
