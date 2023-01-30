@@ -11,11 +11,18 @@ export default function Chat() {
   const [list, setList] = useState({})
   const [chatRoom, setChatRoom] = useState('')
 
-  const message = (e) => {
+  const message = async (e) => {
     e.preventDefault();
     console.log(chatRoom);
     setCurrentUserComment([...currentUserComment, comment]);
     socket.emit("send-comment", { comment: currentUserComment, room: chatRoom });
+    try {
+      const comments = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${chatRoom}/comment`, { content: `${comment}` })
+
+      console.log(comments)
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   const handleSearch = async (e) => {
@@ -25,7 +32,7 @@ export default function Chat() {
       setShowSearch(!showSearch)
       const searchList = searchFor.data.map((search) => {
         return (
-          <div key={search._id} onClick={()=>joinChat(search._id)}>
+          <div key={search._id} onClick={() => joinChat(search._id)}>
             {search.title}
           </div>
         )
@@ -39,7 +46,6 @@ export default function Chat() {
 
   const joinChat = async (id) => {
     try {
-      // const chat = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}`)
       setChatRoom(`${id}`)
       socket.emit('join-chat', `${id}`)
       console.log(id)
@@ -47,6 +53,15 @@ export default function Chat() {
       console.warn(err)
     }
   }
+
+  // const commentList = async function () {
+  //   try {
+  //     const comment = await axios.post(`${process.env.REACT_APP_SERVER_URL}`)
+
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
 
   useEffect(() => {
