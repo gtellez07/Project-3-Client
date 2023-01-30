@@ -12,6 +12,7 @@ import SideBar from './components/Navbar'
 import 'bulma/css/bulma.css'
 import './App.css'
 import jwt_decode from 'jwt-decode'
+import ChatForm from './components/pages/ChatForm'
 
 function App() {
   // the currently logged in user will be stored up here in state
@@ -78,6 +79,7 @@ function App() {
             path="/profile"
             element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
+          <Route path="/chat-form" element={<ChatForm currentUser={currentUser}/>}/>
         </Routes>
       </div>
     </Router>
