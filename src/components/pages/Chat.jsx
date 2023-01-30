@@ -25,7 +25,7 @@ export default function Chat() {
       setShowSearch(!showSearch)
       const searchList = searchFor.data.map((search) => {
         return (
-          <div key={search._id}>
+          <div key={search._id} onClick={()=>joinChat(search._id)}>
             {search.title}
           </div>
         )
@@ -37,12 +37,12 @@ export default function Chat() {
     }
   }
 
-  const findChat = async (id) => {
+  const joinChat = async (id) => {
     try {
-      const chat = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}`)
-      setChatRoom(`${chat?.data?._id}`)
-      socket.emit('join-chat', `${chat?.data?._id}`)
-      console.log(chat.data)
+      // const chat = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}`)
+      setChatRoom(`${id}`)
+      socket.emit('join-chat', `${id}`)
+      console.log(id)
     } catch (err) {
       console.warn(err)
     }
