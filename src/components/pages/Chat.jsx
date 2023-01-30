@@ -13,7 +13,7 @@ export default function Chat() {
 
   const message = (e) => {
     e.preventDefault();
-    console.log(e);
+    console.log(chatRoom);
     setCurrentUserComment([...currentUserComment, comment]);
     socket.emit("send-comment", { comment: currentUserComment, room: chatRoom });
   };
