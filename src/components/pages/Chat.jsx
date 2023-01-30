@@ -8,6 +8,7 @@ export default function Chat() {
   const [otherUserComment, setOtherUserComment] = useState([]);
   const [search,setSearch] = useState('')
   const[showSearch,setShowSearch]= useState(false)
+  const [data,setData] = useState([])
 
   const message = (e) => {
     e.preventDefault();
@@ -22,25 +23,24 @@ export default function Chat() {
       const searchFor = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats?search=${search}`)
       console.log(searchFor.data)
       setShowSearch(!showSearch)
-    //   if(showSearch){
-
-    //     return(
-    //       <div>
-    //     <p>{searchFor.data.title}</p>
-    //     </div>
-    //   )
-    // }
-
+      setData(searchFor.data)
     }catch(err){
       console.warn(err)
     }
+  }
 
+  const findChat = async (id)=>{
+    try{
+      const chat = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}`)
+      console.log(chat.data)
+    }catch(err){
+      console.warn(err)
+    }
   }
 
   useEffect(() => {
     socket.on("receive-comment", (comment) => {
       setOtherUserComment([...otherUserComment, comment.comment]);
-      //alert(comment.comment)
     });
   }, [socket]);
 
@@ -60,8 +60,23 @@ export default function Chat() {
     );
   });
 
+  
+
   return (
     <div className="home">
+      <form onSubmit={handleSearch}>
+        <label htmlFor="search">Search Chat: </label>
+        <input
+          id="search"
+          type='text'
+          value={search}
+          onChange={(e)=>setSearch(e.target.value)}
+          />
+          <button type="submit">Search</button>
+      </form>
+      <div onClick={()=>findChat(data._id)}>
+      <p>{data.title}</p>
+      </div>
       <h1>
         <strong>Chat Room</strong>
       </h1>
@@ -79,16 +94,6 @@ export default function Chat() {
           onChange={(e) => setComment(e.target.value)}
         />
       <button type = 'submit' >connect</button>
-      </form>
-      <form onSubmit={handleSearch}>
-        <label htmlFor="search">Search Chat</label>
-        <input
-          id="search"
-          type='text'
-          value={search}
-          onChange={(e)=>setSearch(e.target.value)}
-          />
-          <button type="submit">Search</button>
       </form>
     </div>
   );
