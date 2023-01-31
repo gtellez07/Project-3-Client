@@ -69,7 +69,7 @@ export default function Chat() {
     socket.on("receive-comment", (comment) => {
       setOtherUserComment([...otherUserComment, comment.comment]);
     });
-  }, [socket]);
+  }, []);
 
   let currentUserComments = currentUserComment.map((comment, idx) => {
     return (
