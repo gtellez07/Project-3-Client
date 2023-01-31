@@ -13,7 +13,7 @@ export default function ChatForm(props) {
         try {
             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats`, {title:name})
             console.log(response.data._id)
-            // navigate(`/chat-room/${response.data._id}`)
+             navigate(`/chat-room/${response.data._id}`)
         } catch (err) {
             console.log(err)
         }
