@@ -2,12 +2,15 @@ import { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from 'axios'
+import { render } from "@testing-library/react";
+import { type } from "@testing-library/user-event/dist/type";
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 export default function ChatRoom(props) {
-    const [comments,setComment] = useState([])
+    let [comments,setComment] = useState(null)
     const [sendComment,setSendComment]=useState('')
+    const [fullList,setFullList]=useState({})
     const [receiveComment,setReceiveComment]=useState(null)
-    let [rendered,setRendered]=useState(0)
+    let [apiPinged,setApiPinged]=useState(false)
     let {id} = useParams()
 
     const handleSubmit= async (e)=>{
@@ -16,20 +19,30 @@ export default function ChatRoom(props) {
         try{
             const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,{content:sendComment})
             console.log(send.data)
-            let updateList = comments.map((comment)=>{
-                return(
-                    <div key={`comment${comment._id}`}>
-                        <p>{comment.content}</p>
-                    </div>
-                )
-            })
-            updateList = updateList.push(
-                <div key={`new-comment${Math.floor(Math.random() * 101)}`}>
-                    <p>{sendComment}</p>
-                </div>
-            )
+            // let updateList = comments.map((comment)=>{
+            //     return(
+            //         <div key={`comment${comment._id}`}>
+            //             <p>{comment.content}</p>
+            //         </div>
+            //     )
+            // })
+            // updateList = updateList.push(
+            //     <div key={`new-comment${Math.floor(Math.random() * 101)}`}>
+            //         <p>{sendComment}</p>
+            //     </div>
+            // )
+            let updatedList= <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{sendComment}</p></div>
+            let y= []
+            for(let i in comments){
+                console.log(comments[i])
+                y.push(comments[i])
+            }
+            setComment([...y,updatedList])
+            setFullList([...comments,updatedList])
+          //  console.log(fullList)
+            // setComment([...comments,updatedList])
             setSendComment('')   
-            setComment(updateList)
+            //setComment(updateList)
         }catch(err){
             console.log(err)
         }
@@ -37,6 +50,7 @@ export default function ChatRoom(props) {
     const apiPing = async () => {
         try{
             //console.log(id)
+            console.log('ping')
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`)
              const commentList = response.data.content.map((comment)=>{
                 return(
@@ -45,8 +59,10 @@ export default function ChatRoom(props) {
                     </div>
                 )
             })
-            console.log(commentList)
+            //console.log(commentList)
             setComment(commentList)
+            
+            // setRendered(render+1)
         }catch(err){
             console.log(err)
         }
@@ -54,19 +70,52 @@ export default function ChatRoom(props) {
 
   useEffect(() => {
     socket.emit('join-chat',`${id}`)
+    console.log(apiPinged)
+    apiPing()
+    setApiPinged((current) => !current)
+    console.log(apiPinged)
     //console.log(socket)
+    // let add1 = rendered + 1
+    // setRendered(add1)
+  },[id]);
+
+  useEffect(()=>{
     socket.on('receive-comment',(comment)=>{
         console.log(comment,"comment reciev3d")
+        let receiveUpdate=  <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{comment}</p></div>
+        // setApiPinged((current) => !current)
+        console.log(fullList)
+        //console.log(Object.keys(comments).length)
+        let x= []
+        for(let i in comments){
+            console.log(comments[i])
+            x.push(comments[i])
+        }
+        console.log(x)
+        // setFullList([...fullList,receiveUpdate])
+        setComment([...x,receiveUpdate])
+        console.log(comments)
         setReceiveComment(comment)
     })
-    apiPing()
-    setRendered(rendered+=1)
-  },[id]);
+  })
 //console.log(comments)
+//console.log(Object.keys(fullList).length)
+// for(let i in fullList){
+//     console.log(fullList[i])
+// }
+let sub 
+
+ if (Object.keys(fullList).length >1){
+    fullList.forEach((comment)=>{
+        console.log(comment)
+    })
+ }
   return (
     <div>
-        {comments.length && rendered>=1 > 0? comments :null}
-        {}
+        {/* { rendered<=1 > 0? comments.map(comment=>console.log(comment)) :null} */}
+        {/* { apiPinged ? comments:null} */}
+        {apiPinged ? comments:null}
+        {/* {Object.keys(fullList).length >1 ?  fullList : null } */}
         <form onSubmit={handleSubmit}>
             <input
                 type='text'
