@@ -45,47 +45,55 @@ export default function Login({ currentUser, setCurrentUser }) {
 	}
 
 	return (
-		<div>
-			<div className='field is-grouped is-grouped-centered'>
-				<div className='title is-1'>
-					Login to Your Account
+		<section className="hero is-large">
 
-					<p>{msg}</p>
-				</div>
+			<section className="hero-body is-medium has-background-warning">
 
-			</div>
-			<div className='field is-grouped is-grouped-centered'>
 
-				<form onSubmit={handleSubmit}>
-					<label className='label' htmlFor='email'>Email:</label>
-					<div className='field '>
-						<input
-							className='input is-dark'
-							autoComplete="off"
-							type="email"
-							id="email"
-							placeholder='Your email...'
-							onChange={e => setEmail(e.target.value)}
-							value={email}
-						/>
-					</div>
 
-					<label className='label' htmlFor='password'>Password:</label>
-					<div className='field'>
-						<input
-							className='input is-dark'
-							type="password"
-							id="password"
-							placeholder='Password...'
-							onChange={e => setPassword(e.target.value)}
-							value={password}
-						/>
+				<div>
+					<div className='field is-grouped is-grouped-centered'>
+						<div className='title is-1'>
+							Login to Your Account
+
+							<p>{msg}</p>
+						</div>
+
 					</div>
 					<div className='field is-grouped is-grouped-centered'>
-						<button className='button is-small is-dark' type="submit">Login</button>
+
+						<form onSubmit={handleSubmit}>
+							<label className='label' htmlFor='email'>Email:</label>
+							<div className='field '>
+								<input
+									className='input is-dark'
+									autoComplete="off"
+									type="email"
+									id="email"
+									placeholder='Your email...'
+									onChange={e => setEmail(e.target.value)}
+									value={email}
+								/>
+							</div>
+
+							<label className='label' htmlFor='password'>Password:</label>
+							<div className='field'>
+								<input
+									className='input is-dark'
+									type="password"
+									id="password"
+									placeholder='Password...'
+									onChange={e => setPassword(e.target.value)}
+									value={password}
+								/>
+							</div>
+							<div className='field is-grouped is-grouped-centered'>
+								<button className='button is-small is-dark' type="submit">Login</button>
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
-		</div>
+				</div>
+			</section>
+		</section>
 	)
 }

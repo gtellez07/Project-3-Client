@@ -46,23 +46,26 @@ export default function Profile({ currentUser, handleLogout }) {
 
 
 	return (
-
-		<div className='field'>
-			<div className='field is-grouped is-grouped-centered'>
-				<h1 className='title is-2'>Here's your profile, {currentUser?.name}</h1>
-			</div>
-			<div className='field is-grouped is-grouped-centered'>
-				<p className='subtitle is-4'>Your email is: {currentUser?.email}</p>
-			</div>
-			<div className='field is-grouped is-grouped-centered'>
-				<p className='subtitle is-5'>Bio: {currentUser?.bio}</p>
-			</div>
-			<div className='field is-grouped is-grouped-centered'>
-				<h3 className='subtitle is-5'>{msg}</h3>
-			</div>
-			<div className='field is-grouped is-grouped-centered'>
-				<h2 className='subtitle is-5'>Thank You for Using CHAPPIE!</h2>
-			</div>
-		</div>
+		<section className="hero is-large">
+			<section className="hero-body is-medium has-background-warning">
+				<div className='field'>
+					<div className='field is-grouped is-grouped-centered'>
+						<h1 className='title is-2'>Here's your profile, {currentUser?.name}</h1>
+					</div>
+					<div className='field is-grouped is-grouped-centered'>
+						<p className='subtitle is-4'>Your email is: {currentUser?.email}</p>
+					</div>
+					<div className='field is-grouped is-grouped-centered'>
+						<p className='subtitle is-5'>Bio: {currentUser?.bio}</p>
+					</div>
+					<div className='field is-grouped is-grouped-centered'>
+						<h3 className='subtitle is-5'>{msg}</h3>
+					</div>
+					<div className='field is-grouped is-grouped-centered'>
+						<h2 className='subtitle is-5'>Thank You for Using CHAPPIE!</h2>
+					</div>
+				</div>
+			</section>
+		</section>
 	)
 }
