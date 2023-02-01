@@ -12,7 +12,7 @@ export default function ChatRoom(props) {
     // const [receiveComment,setReceiveComment]=useState(null)
     let [apiPinged,setApiPinged]=useState(false)
     let {id} = useParams()
-
+console.log(props.currentUser)
     const handleSubmit= async (e)=>{
         e.preventDefault()
 
@@ -21,10 +21,16 @@ export default function ChatRoom(props) {
         }else{
             socket.emit('send-comment',{ comment: sendComment, room: id })
             try{
-                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,{content:sendComment})
+                let body={
+                    content: sendComment,
+                    userName: props.currentUser.name,
+                    userId: props.currentUser.id
+                }
+                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,body)
                 let updatedList= <div key={`new-comment${key}`}><p>{sendComment}</p></div>
             let newKey = key+1
             setKey(newKey)
+
                 let y= []
                 for(let i in comments){
                     console.log(comments[i])
@@ -37,7 +43,7 @@ export default function ChatRoom(props) {
             console.log(err)
         }
     }
-    
+}
     const apiPing = async () => {
         try{
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`)
@@ -99,3 +105,4 @@ export default function ChatRoom(props) {
     </div>
     );
 }
+
