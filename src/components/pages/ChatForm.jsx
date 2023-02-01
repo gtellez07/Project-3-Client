@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function ChatForm(props) {
     // state hook for form input field
@@ -19,19 +19,31 @@ export default function ChatForm(props) {
         }
     }
 
+    let loggedIn = <form onSubmit={handleSubmit}>
+    <div>
+    <label htmlFor="title">Title:</label>
+        <input 
+        type="text"
+        id="title" 
+        value={name} 
+        onChange={e => setName(e.target.value)} 
+        />
+        </div>
+        <button type="submit">Create Chat</button>
+    </form>
 
+    let notLoggedIn = <div>
+        <h2>Login to create a chat room</h2>
+        <Link to='/login'>
+            Login Page
+        </Link><br></br>
+        <Link to='/register'>
+            Register for an account
+        </Link>
+    </div>
     return(
-        <form onSubmit={handleSubmit}>
         <div>
-        <label htmlFor="title">Title:</label>
-            <input 
-            type="text"
-            id="title" 
-            value={name} 
-            onChange={e => setName(e.target.value)} 
-            />
-            </div>
-            <button type="submit">Create Chat</button>
-        </form>
+            {props.currentUser ? loggedIn: notLoggedIn}
+        </div>
     )
 }
