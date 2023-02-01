@@ -14,6 +14,7 @@ import './App.css'
 import jwt_decode from 'jwt-decode'
 import ChatForm from './components/pages/ChatForm'
 import ChatRoom from './components/pages/ChatRoom'
+import ErrorPage from './components/pages/ErrorPage'
 
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
           path="/chat-room/:id"
           element={<ChatRoom currentUser={currentUser}/>}
           />
+          <Route path="/error" element={<ErrorPage/>}/>
         </Routes>
       </div>
     </Router>
