@@ -16,20 +16,20 @@ export default function ChatRoom(props) {
         if (!props.currentUser) {
             setSendComment('Login to comment')
 
-        }else{
-            socket.emit('send-comment',{ comment: sendComment, room: id })
-            try{
-                let body={
+        } else {
+            socket.emit('send-comment', { comment: sendComment, room: id })
+            try {
+                let body = {
                     content: sendComment,
                     userName: props.currentUser.name,
                     userId: props.currentUser.id
                 }
-                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,body)
-                let updatedList= <div key={`new-comment${key}`}><p>{sendComment}</p></div>
-                let newKey = key+1
+                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`, body)
+                let updatedList = <div key={`new-comment${key}`}><p>{sendComment}</p></div>
+                let newKey = key + 1
                 setKey(newKey)
-                let y= []
-                for(let i in comments){
+                let y = []
+                for (let i in comments) {
                     console.log(comments[i])
                     y.push(comments[i])
                 }
@@ -40,7 +40,7 @@ export default function ChatRoom(props) {
             }
         }
     }
-}
+
 
     const apiPing = async () => {
         try {
@@ -88,6 +88,7 @@ export default function ChatRoom(props) {
             <p className="title is-2">Please Login to Interact With Chat</p>
         </div>
     </div>
+
     return (
         <div className="field">
             <div className="field is-grouped is-grouped-centered">
@@ -114,4 +115,3 @@ export default function ChatRoom(props) {
         </div>
     );
 }
-

@@ -13,7 +13,7 @@ export default function Footer() {
             </section>
             <section className="hero is-small is-dark py-3">
                 <div className="hero-foot">
-                    <nav class="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
+                    <nav className="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
                         <ul>
                             <li>
                                 <a href='#'>
@@ -35,7 +35,7 @@ export default function Footer() {
             </section>
             <section className="hero is-small is-light py-3">
                 <div className="hero-foot">
-                    <nav class="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
+                    <nav className="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
                         <ul>
                             <li>
                                 <a href="https://github.com/GetFluxxed">
@@ -57,7 +57,7 @@ export default function Footer() {
             </section>
             <section className="hero is-small is-dark py-3">
                 <div className="hero-foot">
-                    <nav class="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
+                    <nav className="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
                         <ul>
                             <li>
                                 <a href='#'>
