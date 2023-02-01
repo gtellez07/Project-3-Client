@@ -1,22 +1,26 @@
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate
+  Route
 } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Login from './components/pages/Login'
 import Profile from './components/pages/Profile'
 import Register from './components/pages/Register'
-import Welcome from './components/pages/Welcome'
-import Navbar from './components/Navbar'
+import Chat from './components/pages/Chat'
+import SideBar from './components/Navbar'
+import 'bulma/css/bulma.css'
 import './App.css'
 import jwt_decode from 'jwt-decode'
+import ChatForm from './components/pages/ChatForm'
+import ChatRoom from './components/pages/ChatRoom'
+import ErrorPage from './components/pages/ErrorPage'
+import Footer from './components/Footer'
+
 
 function App() {
   // the currently logged in user will be stored up here in state
   const [currentUser, setCurrentUser] = useState(null)
-
   // useEffect -- if the user navigates away form the page, we will log them back in
   useEffect(() => {
     // check to see if token is in storage
@@ -43,7 +47,7 @@ function App() {
   return (
     <Router>
       <header>
-        <Navbar 
+        <SideBar
           currentUser={currentUser}
           handleLogout={handleLogout}
         />
@@ -51,17 +55,17 @@ function App() {
 
       <div className="App">
         <Routes>
-          <Route 
+          <Route
             path="/"
-            element={<Welcome />}
+            element={<Chat />}
           />
 
-          <Route 
+          <Route
             path="/register"
             element={<Register currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
 
-          <Route 
+          <Route
             path="/login"
             element={<Login currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
@@ -74,12 +78,21 @@ function App() {
             /> 
 		  */}
 
-          <Route 
+          <Route
             path="/profile"
             element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
+          <Route path="/chat-form" element={<ChatForm currentUser={currentUser} />} />
+          <Route
+            path="/chat-room/:id"
+            element={<ChatRoom currentUser={currentUser} />}
+          />
+          <Route path="/error" element={<ErrorPage />} />
         </Routes>
       </div>
+      <footer>
+        <Footer />
+      </footer>
     </Router>
   );
 }

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { Navigate } from 'react-router-dom'
+import classNames from 'classnames'
 
 export default function Login({ currentUser, setCurrentUser }) {
 	// state for the controlled form
@@ -15,10 +16,10 @@ export default function Login({ currentUser, setCurrentUser }) {
 		try {
 			// post fortm data to the backend
 			const reqBody = {
-				email, 
+				email,
 				password
 			}
-			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api-v1/users/login`, reqBody)
+			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, reqBody)
 
 			// save the token in localstorage
 			const { token } = response.data
@@ -36,40 +37,63 @@ export default function Login({ currentUser, setCurrentUser }) {
 				setMsg(err.response.data.msg)
 			}
 		}
- 	}
+	}
 
 	// conditionally render a navigate component
 	if (currentUser) {
-		return <Navigate to="/profile" />
+		return <Navigate to="/" />
 	}
 
 	return (
-		<div>
-			<h1>Login to Your Account:</h1>
+		<section className="hero is-large">
 
-			<p>{msg}</p>
+			<section className="hero-body is-medium has-background-warning">
 
-			<form onSubmit={handleSubmit}>
-				<label htmlFor='email'>Email:</label>
-				<input 
-					type="email"
-					id="email"
-					placeholder='your email...'
-					onChange={e => setEmail(e.target.value)}
-					value={email}
-				/>
 
-				<label htmlFor='password'>Password:</label>
-				<input 
-					type="password"
-					id="password"
-					placeholder='password...'
-					onChange={e => setPassword(e.target.value)}
-					value={password}
-				/>
 
-				<button type="submit">Login</button>
-			</form>
-		</div>
+				<div>
+					<div className='field is-grouped is-grouped-centered'>
+						<div className='title is-1'>
+							Login to Your Account
+
+							<p>{msg}</p>
+						</div>
+
+					</div>
+					<div className='field is-grouped is-grouped-centered'>
+
+						<form onSubmit={handleSubmit}>
+							<label className='label' htmlFor='email'>Email:</label>
+							<div className='field '>
+								<input
+									className='input is-dark'
+									autoComplete="off"
+									type="email"
+									id="email"
+									placeholder='Your email...'
+									onChange={e => setEmail(e.target.value)}
+									value={email}
+								/>
+							</div>
+
+							<label className='label' htmlFor='password'>Password:</label>
+							<div className='field'>
+								<input
+									className='input is-dark'
+									type="password"
+									id="password"
+									placeholder='Password...'
+									onChange={e => setPassword(e.target.value)}
+									value={password}
+								/>
+							</div>
+							<div className='field is-grouped is-grouped-centered'>
+								<button className='button is-small is-dark' type="submit">Login</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+		</section>
 	)
 }
