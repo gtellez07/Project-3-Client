@@ -11,7 +11,7 @@ export default function ChatRoom(props) {
     // const [receiveComment,setReceiveComment]=useState(null)
     let [apiPinged,setApiPinged]=useState(false)
     let {id} = useParams()
-
+console.log(props.currentUser)
     const handleSubmit= async (e)=>{
         e.preventDefault()
         if(!props.currentUser){
@@ -19,7 +19,24 @@ export default function ChatRoom(props) {
         }else{
             socket.emit('send-comment',{ comment: sendComment, room: id })
             try{
-                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,{content:sendComment})
+                // let body = {
+                //     'content':`${sendComment}`,
+                //      'userName': `${props.currentUser.name}`,
+                //      'userId':`${props.currentUser.id}`
+                // }
+                // let userName = props.currentUser.name
+                // let userId = props.currentUser._id
+                // let body={
+                //     sendComment,
+                //     userName,
+                //     userId
+                // }
+                let body={
+                    content: sendComment,
+                    userName: props.currentUser.name,
+                    userId: props.currentUser.id
+                }
+                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,body)
                 let updatedList= <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{sendComment}</p></div>
                 let y= []
                 for(let i in comments){
