@@ -40,7 +40,7 @@ export default function ChatRoom(props) {
             }
         }
     }
-}
+
 
     const apiPing = async () => {
         try {
