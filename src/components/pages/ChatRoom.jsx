@@ -2,6 +2,7 @@ import { useEffect,useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 export default function ChatRoom(props) {
@@ -12,7 +13,7 @@ export default function ChatRoom(props) {
     // const [receiveComment,setReceiveComment]=useState(null)
     let [apiPinged,setApiPinged]=useState(false)
     let {id} = useParams()
-
+    let navigate = useNavigate();
     const handleSubmit= async (e)=>{
         e.preventDefault()
 
@@ -30,6 +31,7 @@ export default function ChatRoom(props) {
                     console.log(comments[i])
                     y.push(comments[i])
                 }
+                
 
             setComment([...y,updatedList])
             setSendComment('')   
@@ -37,6 +39,7 @@ export default function ChatRoom(props) {
             console.log(err)
         }
     }
+}
     
     const apiPing = async () => {
         try{

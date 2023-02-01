@@ -12,7 +12,7 @@ export default function Chat() {
   const [list, setList] = useState({})
   const [chatRoom, setChatRoom] = useState('')
   let navigate = useNavigate();
-
+  
   const message = async (e) => {
     e.preventDefault();
     console.log(chatRoom);
@@ -49,6 +49,7 @@ export default function Chat() {
       setList(searchList)
 
     } catch (err) {
+      navigate('/error')
       console.warn(err)
     }
   }
