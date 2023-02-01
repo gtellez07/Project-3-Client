@@ -7,7 +7,6 @@ export default function ChatRoom(props) {
     let [comments, setComment] = useState(null)
     let [key, setKey] = useState(1)
     const [sendComment, setSendComment] = useState('')
-    const [fullList, setFullList] = useState({})
     let [apiPinged, setApiPinged] = useState(false)
     const [chatName, setChatName] = useState('')
     let { id } = useParams()
@@ -16,15 +15,21 @@ export default function ChatRoom(props) {
 
         if (!props.currentUser) {
             setSendComment('Login to comment')
-        } else {
-            socket.emit('send-comment', { comment: sendComment, room: id })
-            try {
-                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`, { content: sendComment })
-                let updatedList = <div key={`new-comment${key}`}><p>{sendComment}</p></div>
-                let newKey = key + 1
+
+        }else{
+            socket.emit('send-comment',{ comment: sendComment, room: id })
+            try{
+                let body={
+                    content: sendComment,
+                    userName: props.currentUser.name,
+                    userId: props.currentUser.id
+                }
+                const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,body)
+                let updatedList= <div key={`new-comment${key}`}><p>{sendComment}</p></div>
+                let newKey = key+1
                 setKey(newKey)
-                let y = []
-                for (let i in comments) {
+                let y= []
+                for(let i in comments){
                     console.log(comments[i])
                     y.push(comments[i])
                 }
@@ -35,6 +40,8 @@ export default function ChatRoom(props) {
             }
         }
     }
+}
+
     const apiPing = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`)
@@ -107,3 +114,4 @@ export default function ChatRoom(props) {
         </div>
     );
 }
+
