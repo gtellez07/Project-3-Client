@@ -59,7 +59,7 @@ export default function Register({ currentUser, setCurrentUser }) {
 					<label className='label' htmlFor='name'>Name:</label>
 					<div className='field'>
 						<input
-							className='input is-primary'
+							className='input is-dark'
 							type="text"
 							id="name"
 							placeholder='Your username...'
@@ -70,7 +70,7 @@ export default function Register({ currentUser, setCurrentUser }) {
 
 					<label className='label' htmlFor='email'>Email:</label>
 					<input
-						className='input is-primary'
+						className='input is-dark'
 						type="email"
 						id="email"
 						placeholder='Your email...'
@@ -80,7 +80,7 @@ export default function Register({ currentUser, setCurrentUser }) {
 
 					<label className='label' htmlFor='password'>Password:</label>
 					<input
-						className='input is-primary'
+						className='input is-dark'
 						type="password"
 						id="password"
 						placeholder='Password...'
@@ -89,7 +89,7 @@ export default function Register({ currentUser, setCurrentUser }) {
 					/>
 					<div className='field is-grouped is-grouped-centered'>
 
-						<button className='button is-small has-background-primary' type="submit">Register</button>
+						<button className='button is-small is-dark' type="submit">Register</button>
 					</div>
 				</form>
 			</div>

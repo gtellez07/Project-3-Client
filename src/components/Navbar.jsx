@@ -3,51 +3,45 @@ import { Link } from 'react-router-dom'
 
 export default function SideBar({ currentUser, handleLogout }) {
 	const loggedIn = (
-		<aside className='menu'>
-			<ul className='menu-list'>
-				{/* if the user is logged in... */}
-				<li className='has-background-primary'>
-					<Link to="/">
-						<p>Home</p>
+		<nav className="navbar is-dark" role="navigation" aria-label="main navigation">
+			<div id="navbarBasicExample" className="navbar-menu">
+				<div className="navbar-start">
+					<Link to="/" className='navbar-item'>
+						Home
 					</Link>
-				</li>
-				<li className='has-background-primary'>
-					<Link to="/">
-						<span onClick={handleLogout}>Logout</span>
-					</Link>
-				</li>
-				<li className='has-background-primary'>
-					<Link to="/profile">
+
+					<Link to="/profile" className='navbar-item'>
 						Profile
 					</Link>
-				</li>
-			</ul>
 
-		</aside>
+					<Link to="/" className='navbar-item'>
+						<span onClick={handleLogout}>Logout</span>
+					</Link>
+
+				</div>
+			</div>
+		</nav>
 	)
 
 	const loggedOut = (
-		<aside className='menu'>
-			<ul className='menu-list'>
-				<li className='has-background-primary'>
-					<Link to="/">
-						<p>Home</p>
+		<nav className="navbar is-light" role="navigation" aria-label="main navigation">
+			<div id="navbarBasicExample" className="navbar-menu">
+				<div className="navbar-start">
+					<Link to="/" className='navbar-item'>
+						Home
 					</Link>
-				</li>
-				<li className='has-background-primary'>
-					<Link to="/register">
+
+					<Link to="/register" className='navbar-item'>
 						Register
 					</Link>
-				</li>
-				<li className='has-background-primary'>
-					<Link to="/login">
+
+					<Link to="/login" className='navbar-item'>
 						Login
 					</Link>
-				</li>
-			</ul>
 
-			{/* if the user is not logged in... */}
-		</aside>
+				</div>
+			</div>
+		</nav>
 	)
 
 	return (

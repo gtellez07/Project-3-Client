@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import axios from 'axios'
-
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 export default function ChatRoom(props) {
     let [comments, setComment] = useState(null)
     let [key, setKey] = useState(1)
     const [sendComment, setSendComment] = useState('')
-    // const [fullList,setFullList]=useState({})
-    // const [receiveComment,setReceiveComment]=useState(null)
+    const [fullList, setFullList] = useState({})
     let [apiPinged, setApiPinged] = useState(false)
+    const [chatName, setChatName] = useState('')
     let { id } = useParams()
-
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -30,7 +28,6 @@ export default function ChatRoom(props) {
                     console.log(comments[i])
                     y.push(comments[i])
                 }
-
                 setComment([...y, updatedList])
                 setSendComment('')
             } catch (err) {
@@ -41,6 +38,8 @@ export default function ChatRoom(props) {
     const apiPing = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`)
+            console.log(response.data)
+            setChatName(response.data.title)
             const commentList = response.data.content.map((comment) => {
                 return (
                     <div key={`comment${comment._id}`}>
@@ -66,6 +65,7 @@ export default function ChatRoom(props) {
         socket.on('receive-comment', (comment) => {
             console.log(comment, "comment reciev3d")
             let receiveUpdate = <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{comment}</p></div>
+
             let x = []
             for (let i in comments) {
                 console.log(comments[i])
@@ -76,26 +76,34 @@ export default function ChatRoom(props) {
             //setReceiveComment(comment)
         })
     })
-
     let notLoggedIn = <div className="field is-grouped is-grouped-centered">
         <div>
             <p className="title is-2">Please Login to Interact With Chat</p>
         </div>
     </div>
     return (
-        <div>
+        <div className="field">
+            <div className="field is-grouped is-grouped-centered">
+                <p className="title is-1">{chatName}</p>
+
+            </div>
+
             {!props.currentUser ? notLoggedIn : null}
             {apiPinged ? comments : null}
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    placeholder='text'
-                    value={sendComment}
-                    onChange={(e) => setSendComment(e.target.value)}
-                    required
-                />
-                <button type="submit">Send</button>
-            </form>
+
+            <div className="field is-grouped is-grouped-centered">
+                <form onSubmit={handleSubmit}>
+                    <input
+                        className="input"
+                        type='text'
+                        placeholder='text'
+                        value={sendComment}
+                        onChange={(e) => setSendComment(e.target.value)}
+                        required
+                    />
+                </form>
+                <button className="button" type="submit">Send</button>
+            </div>
         </div>
     );
 }

@@ -15,6 +15,7 @@ import jwt_decode from 'jwt-decode'
 import ChatForm from './components/pages/ChatForm'
 import ChatRoom from './components/pages/ChatRoom'
 import ErrorPage from './components/pages/ErrorPage'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -82,14 +83,17 @@ function App() {
             path="/profile"
             element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} />}
           />
-          <Route path="/chat-form" element={<ChatForm currentUser={currentUser}/>}/>
-          <Route 
-          path="/chat-room/:id"
-          element={<ChatRoom currentUser={currentUser}/>}
+          <Route path="/chat-form" element={<ChatForm currentUser={currentUser} />} />
+          <Route
+            path="/chat-room/:id"
+            element={<ChatRoom currentUser={currentUser} />}
           />
-          <Route path="/error" element={<ErrorPage/>}/>
+          <Route path="/error" element={<ErrorPage />} />
         </Routes>
       </div>
+      <footer>
+        <Footer />
+      </footer>
     </Router>
   );
 }
