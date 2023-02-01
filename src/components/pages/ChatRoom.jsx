@@ -9,15 +9,14 @@ export default function ChatRoom(props) {
     const [sendComment, setSendComment] = useState('')
     let [apiPinged, setApiPinged] = useState(false)
     const [chatName, setChatName] = useState('')
-    let { id } = useParams()
+    let [userId, setUserId] = useState('')
+    let {id} = useParams()
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         if (!props.currentUser) {
             setSendComment('Login to comment')
-
         }else{
-            socket.emit('send-comment',{ comment: sendComment, room: id })
+            socket.emit('send-comment',{ comment: sendComment, room: id, userName:props.currentUser.name,userId:props.currentUser.id})
             try{
                 let body={
                     content: sendComment,
@@ -25,12 +24,24 @@ export default function ChatRoom(props) {
                     userId: props.currentUser.id
                 }
                 const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,body)
-                let updatedList= <div key={`new-comment${key}`}><p>{sendComment}</p></div>
+                let date = new Date()
+                date = date.toString()
+                let time = date.slice(16,24)
+                date = date.slice(0,15)
+                console.log(time)
+                // date = date
+                let updatedList= <div key={`new-comment${key}`}>
+                <p>{sendComment}</p>
+                <div className="tags has-addons">
+                <span className="tag is-dark">-{body.userName} </span>
+                <span className="tag">{date}</span>
+                <span className="tag is-dark">{time}</span>
+                </div>
+                </div>
                 let newKey = key+1
                 setKey(newKey)
                 let y= []
                 for(let i in comments){
-                    console.log(comments[i])
                     y.push(comments[i])
                 }
                 setComment([...y, updatedList])
@@ -41,16 +52,33 @@ export default function ChatRoom(props) {
         }
     }
 
-
     const apiPing = async () => {
         try {
+            setUserId(props.currentUser?.id)
+            console.log(userId)
+            console.log(props)
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`)
-            console.log(response.data)
             setChatName(response.data.title)
+             console.log(props.currentUser)
             const commentList = response.data.content.map((comment) => {
+                console.log(comment)
+                let date = comment.createdAt
+                date = date.slice(0,10)
+                // let date = new Date(comment.createdAt)
+                // date = date.getTime()
+                // console.log(date.getTime())
+                // date = date.splice()
+                let user 
+                
+                // comment.userId == props.currentUser.id ? user = 'You' : user= comment.userName
                 return (
                     <div key={`comment${comment._id}`}>
-                        <p>{comment.content}</p>
+                        <p>{comment.userName} said: {comment.content}</p>
+                    <div className="tags has-addons">
+                        <span className="tag is-dark">-{comment.userName}</span>
+                        <span className="tag">{date}</span>
+                        <span></span>
+                    </div>
                     </div>
                 )
             })
@@ -62,25 +90,22 @@ export default function ChatRoom(props) {
 
     useEffect(() => {
         socket.emit('join-chat', `${id}`)
-        console.log(apiPinged)
         apiPing()
         setApiPinged((current) => !current)
-        console.log(apiPinged)
     }, [id]);
 
     useEffect(() => {
         socket.on('receive-comment', (comment) => {
-            console.log(comment, "comment reciev3d")
-            let receiveUpdate = <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{comment}</p></div>
-
+            console.log(comment)
+            let receiveUpdate = <div key={key}><p>{comment.message}</p></div>
+            let newKey = key+1
+            setKey(newKey)
             let x = []
             for (let i in comments) {
                 console.log(comments[i])
                 x.push(comments[i])
             }
             setComment([...x, receiveUpdate])
-            console.log(comments)
-            //setReceiveComment(comment)
         })
     })
     let notLoggedIn = <div className="field is-grouped is-grouped-centered">
@@ -105,11 +130,11 @@ export default function ChatRoom(props) {
                         type='text'
                         placeholder='text'
                         value={sendComment}
-                        onChange={(e) => setSendComment(e.target.value)}
                         required
+                        onChange={(e) => setSendComment(e.target.value)}
                     />
                 </form>
-                <button className="button" type="submit">Send</button>
+                <button className="button" onClick={handleSubmit}>Send</button>
             </div>
         </div>
     );
