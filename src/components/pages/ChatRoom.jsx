@@ -36,6 +36,7 @@ export default function ChatRoom(props) {
             setComment([...y,updatedList])
             setSendComment('')   
         }catch(err){
+            navigate('/error')
             console.log(err)
         }
     }
@@ -53,6 +54,7 @@ export default function ChatRoom(props) {
             })
             setComment(commentList)
         }catch(err){
+            navigate('/error')
             console.log(err)
         }
     }

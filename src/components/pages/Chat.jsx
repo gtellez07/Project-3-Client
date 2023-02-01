@@ -23,6 +23,7 @@ export default function Chat() {
 
       console.log(comments)
     } catch (err) {
+      navigate('/error')
       console.log(err)
     }
   };
@@ -60,6 +61,7 @@ export default function Chat() {
       socket.emit('join-chat', `${id}`)
       console.log(id)
     } catch (err) {
+      navigate('/error')
       console.warn(err)
     }
     console.log(chatRoom)

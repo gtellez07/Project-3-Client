@@ -15,6 +15,7 @@ export default function ChatForm(props) {
             console.log(response.data._id)
              navigate(`/chat-room/${response.data._id}`)
         } catch (err) {
+            navigate('/error', {state: {errorMessage: err.message}})
             console.log(err)
         }
     }
