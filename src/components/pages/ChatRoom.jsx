@@ -7,6 +7,7 @@ import { type } from "@testing-library/user-event/dist/type";
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 export default function ChatRoom(props) {
     let [comments,setComment] = useState(null)
+    let [key,setKey] = useState(1)
     const [sendComment,setSendComment]=useState('')
     const [fullList,setFullList]=useState({})
     const [receiveComment,setReceiveComment]=useState(null)
@@ -31,7 +32,9 @@ export default function ChatRoom(props) {
             //         <p>{sendComment}</p>
             //     </div>
             // )
-            let updatedList= <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{sendComment}</p></div>
+            let updatedList= <div key={`new-comment${key}`}><p>{sendComment}</p></div>
+            let newKey = key+1
+            setKey(newKey)
             let y= []
             for(let i in comments){
                 console.log(comments[i])
