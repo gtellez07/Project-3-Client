@@ -50,7 +50,7 @@ export default function ChatRoom(props) {
             const commentList = response.data.content.map((comment) => {
                 return (
                     <div key={`comment${comment._id}`}>
-                        <p>{comment.content}</p>
+                        <p className="comment mx-6">{comment.content}</p>
                     </div>
                 )
             })
@@ -90,28 +90,37 @@ export default function ChatRoom(props) {
     </div>
 
     return (
-        <div className="field">
-            <div className="field is-grouped is-grouped-centered">
-                <p className="title is-1">{chatName}</p>
+        <section className="hero is-large">
 
-            </div>
+            <section className="hero-body is-medium has-background-warning">
+                <div className="container">
 
-            {!props.currentUser ? notLoggedIn : null}
-            {apiPinged ? comments : null}
 
-            <div className="field is-grouped is-grouped-centered">
-                <form onSubmit={handleSubmit}>
-                    <input
-                        className="input"
-                        type='text'
-                        placeholder='text'
-                        value={sendComment}
-                        onChange={(e) => setSendComment(e.target.value)}
-                        required
-                    />
-                </form>
-                <button className="button" type="submit">Send</button>
-            </div>
-        </div>
+                    <div className="field">
+                        <div className="field is-grouped is-grouped-centered">
+                            <p className="title is-1">{chatName}</p>
+
+                        </div>
+
+                        {!props.currentUser ? notLoggedIn : null}
+                        {apiPinged ? comments : null}
+
+                        <div className="field is-grouped is-grouped-centered">
+                            <form onSubmit={handleSubmit}>
+                                <input
+                                    className="input"
+                                    type='text'
+                                    placeholder='text'
+                                    value={sendComment}
+                                    onChange={(e) => setSendComment(e.target.value)}
+                                    required
+                                />
+                            </form>
+                            <button className="button" type="submit">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
     );
 }

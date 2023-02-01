@@ -85,37 +85,40 @@ export default function Chat() {
 
   return (
     <>
-      <div className="field has-text-centered is-bold">
-        <p className="title is-1">Welcome To CHAPPIE</p>
-      </div>
-      <div className="field is-grouped is-grouped-centered">
-        <form onSubmit={handleSearch}>
-          <label className="label title is-2" htmlFor="search">Search for a Chat</label>
-          <div className="dropdown is-active">
-            <div className="dropdown-trigger">
-              <input
-                className="input"
-                autoComplete="off"
-                id="search"
-                type='text'
-                value={search}
-                placeholder='Look for a chat!'
-                onChange={(e) => setSearch(e.target.value)}
-                required
-              />
-            </div>
-            <div className="dropdown-menu">
-              <div className="dropdown-content">
-                {showSearch ? list : null}
-              </div>
-            </div>
-          </div>
-          <button className="button mx-1" type="submit">Find</button>
-          <button className="button" type='submit' onClick={() => navigate('/chat-form')}>+</button>
-        </form>
+      <section className="hero is-large">
+        <section className="hero-body is-medium has-background-warning">
 
-      </div>
-      <section className=" section is-large">
+          <div className="field has-text-centered is-bold">
+            <p className="title is-1">Welcome To CHAPPIE</p>
+          </div>
+          <div className="field is-grouped is-grouped-centered">
+            <form onSubmit={handleSearch}>
+              <label className="label title is-2" htmlFor="search">Search for a Chat</label>
+              <div className="dropdown is-active">
+                <div className="dropdown-trigger">
+                  <input
+                    className="input"
+                    autoComplete="off"
+                    id="search"
+                    type='text'
+                    value={search}
+                    placeholder='Look for a chat!'
+                    onChange={(e) => setSearch(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="dropdown-menu">
+                  <div className="dropdown-content">
+                    {showSearch ? list : null}
+                  </div>
+                </div>
+              </div>
+              <button className="button mx-1" type="submit">Find</button>
+              <button className="button" type='submit' onClick={() => navigate('/chat-form')}>+</button>
+            </form>
+
+          </div>
+        </section>
       </section>
     </>
   );

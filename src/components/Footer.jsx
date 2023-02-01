@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <>
-            <section className="hero is-small is-light">
+            <section className="hero is-small is-dark">
                 <div className="hero-body">
                     <div className="content has-text-centered">
                         <p>
@@ -18,7 +18,7 @@ export default function Footer() {
                             <li>
                                 <a href='#'>
                                     <span>
-                                        Roberto's: GitHub
+                                        Roberto Contreras': GitHub
                                     </span>
                                 </a>
                             </li>
@@ -33,7 +33,7 @@ export default function Footer() {
                     </nav>
                 </div>
             </section>
-            <section className="hero is-small is-light py-3">
+            <section className="hero is-small is-dark py-3">
                 <div className="hero-foot">
                     <nav className="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
                         <ul>

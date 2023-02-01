@@ -46,53 +46,61 @@ export default function Register({ currentUser, setCurrentUser }) {
 	}
 
 	return (
-		<div>
-			<div className='field is-grouped is-grouped-centered'>
-				<div className='title is-1'>
-					Register for An Account
-					<p>{msg}</p>
-				</div>
+		<section className="hero is-large">
+			<section className="hero-body is-medium has-background-warning">
 
-			</div>
-			<div className='field is-grouped is-grouped-centered'>
-				<form onSubmit={handleSubmit}>
-					<label className='label' htmlFor='name'>Name:</label>
-					<div className='field'>
-						<input
-							className='input is-dark'
-							type="text"
-							id="name"
-							placeholder='Your username...'
-							onChange={e => setName(e.target.value)}
-							value={name}
-						/>
-					</div>
-
-					<label className='label' htmlFor='email'>Email:</label>
-					<input
-						className='input is-dark'
-						type="email"
-						id="email"
-						placeholder='Your email...'
-						onChange={e => setEmail(e.target.value)}
-						value={email}
-					/>
-
-					<label className='label' htmlFor='password'>Password:</label>
-					<input
-						className='input is-dark'
-						type="password"
-						id="password"
-						placeholder='Password...'
-						onChange={e => setPassword(e.target.value)}
-						value={password}
-					/>
+				<div>
 					<div className='field is-grouped is-grouped-centered'>
+						<div className='title is-1'>
+							Register for An Account
+							<p>{msg}</p>
+						</div>
 
-						<button className='button is-small is-dark' type="submit">Register</button>
 					</div>
-				</form>
-			</div>
-		</div>
+					<div className='field is-grouped is-grouped-centered'>
+						<form onSubmit={handleSubmit}>
+							<label className='label' htmlFor='name'>Name:</label>
+							<div className='field'>
+								<input
+									className='input is-dark has-background-light'
+									autoComplete='off'
+									type="text"
+									id="name"
+									placeholder='Your username...'
+									onChange={e => setName(e.target.value)}
+									value={name}
+								/>
+							</div>
+
+							<label className='label' htmlFor='email'>Email:</label>
+							<input
+								className='input is-dark'
+								autoComplete='off'
+								type="email"
+								id="email"
+								placeholder='Your email...'
+								onChange={e => setEmail(e.target.value)}
+								value={email}
+							/>
+
+							<label className='label' htmlFor='password'>Password:</label>
+							<input
+								className='input is-dark'
+								autoComplete='off'
+								type="password"
+								id="password"
+								placeholder='Password...'
+								onChange={e => setPassword(e.target.value)}
+								value={password}
+							/>
+							<div className='field is-grouped is-grouped-centered'>
+
+								<button className='button is-small is-dark' type="submit">Register</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+		</section>
 	)
 }
