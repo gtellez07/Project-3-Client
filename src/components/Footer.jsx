@@ -16,14 +16,14 @@ export default function Footer() {
                     <nav className="breadcrumb is-centered has-bullet-separator" aria-label="breadcrumb">
                         <ul>
                             <li>
-                                <a href='#'>
+                                <a href='https://github.com/robertoooc'>
                                     <span>
                                         Roberto Contreras': GitHub
                                     </span>
                                 </a>
                             </li>
                             <li>
-                                <a href='#'>
+                                <a href='https://www.linkedin.com/in/robertocontreras-software/'>
                                     <span>
                                         LinkedIn
                                     </span>
