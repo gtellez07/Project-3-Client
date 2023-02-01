@@ -20,6 +20,7 @@ import ErrorPage from './components/pages/ErrorPage'
 function App() {
   // the currently logged in user will be stored up here in state
   const [currentUser, setCurrentUser] = useState(null)
+  const [bio, setBio] = useState('')
 
   // useEffect -- if the user navigates away form the page, we will log them back in
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
     } else {
       setCurrentUser(null)
     }
+    console.log(token)
   }, []) // happen only once
 
   // event handler to log the user out when needed
@@ -80,7 +82,7 @@ function App() {
 
           <Route
             path="/profile"
-            element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} />}
+            element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} setBio={setBio} bio={bio} />}
           />
           <Route path="/chat-form" element={<ChatForm currentUser={currentUser}/>}/>
           <Route 
