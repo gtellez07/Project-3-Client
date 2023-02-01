@@ -60,7 +60,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 					<label className='label' htmlFor='email'>Email:</label>
 					<div className='field '>
 						<input
-							className='input is-primary'
+							className='input is-dark'
 							autoComplete="off"
 							type="email"
 							id="email"
@@ -73,7 +73,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 					<label className='label' htmlFor='password'>Password:</label>
 					<div className='field'>
 						<input
-							className='input is-primary'
+							className='input is-dark'
 							type="password"
 							id="password"
 							placeholder='Password...'
@@ -82,7 +82,7 @@ export default function Login({ currentUser, setCurrentUser }) {
 						/>
 					</div>
 					<div className='field is-grouped is-grouped-centered'>
-						<button className='button is-small has-background-primary' type="submit">Login</button>
+						<button className='button is-small is-dark' type="submit">Login</button>
 					</div>
 				</form>
 			</div>
