@@ -6,6 +6,7 @@ import axios from 'axios'
 const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}`);
 export default function ChatRoom(props) {
     let [comments,setComment] = useState(null)
+    let [key,setKey] = useState(1)
     const [sendComment,setSendComment]=useState('')
     // const [fullList,setFullList]=useState({})
     // const [receiveComment,setReceiveComment]=useState(null)
@@ -14,42 +15,35 @@ export default function ChatRoom(props) {
 console.log(props.currentUser)
     const handleSubmit= async (e)=>{
         e.preventDefault()
+
         if(!props.currentUser){
             setSendComment('Login to comment')
         }else{
             socket.emit('send-comment',{ comment: sendComment, room: id })
             try{
-                // let body = {
-                //     'content':`${sendComment}`,
-                //      'userName': `${props.currentUser.name}`,
-                //      'userId':`${props.currentUser.id}`
-                // }
-                // let userName = props.currentUser.name
-                // let userId = props.currentUser._id
-                // let body={
-                //     sendComment,
-                //     userName,
-                //     userId
-                // }
                 let body={
                     content: sendComment,
                     userName: props.currentUser.name,
                     userId: props.currentUser.id
                 }
                 const send = await axios.post(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`,body)
-                let updatedList= <div key={`new-comment${Math.floor(Math.random() * 101)}`}><p>{sendComment}</p></div>
+                let updatedList= <div key={`new-comment${key}`}><p>{sendComment}</p></div>
+            let newKey = key+1
+            setKey(newKey)
+
                 let y= []
                 for(let i in comments){
                     console.log(comments[i])
                     y.push(comments[i])
                 }
+
             setComment([...y,updatedList])
             setSendComment('')   
         }catch(err){
             console.log(err)
         }
     }
-    }
+}
     const apiPing = async () => {
         try{
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}chats/${id}/comment`)
@@ -111,3 +105,4 @@ console.log(props.currentUser)
     </div>
     );
 }
+
