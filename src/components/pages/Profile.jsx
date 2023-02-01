@@ -65,10 +65,10 @@ export default function Profile({ currentUser, handleLogout, bio, setBio }) {
 				<h1 className='title is-2'>Here's your profile, {currentUser?.name}</h1>
 			</div>
 			<div className='field is-grouped is-grouped-centered'>
-				<p className='subtitle is-4'>Your email is: {currentUser?.email}</p>
+				<p className='subtitle is-4'><strong>Your email is:</strong> {currentUser?.email}</p>
 			</div>
 			<div className='field is-grouped is-grouped-centered'>
-				<p className='subtitle is-5'>Bio: {bio}</p>
+				<p className='subtitle is-4'><strong>Bio:</strong> <span className="subtitle is-5">{bio}</span></p>
 			</div>
 			<div className='field is-grouped is-grouped-centered'>
 				<h3 className='subtitle is-5'>{msg}</h3>
