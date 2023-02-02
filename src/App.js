@@ -21,6 +21,7 @@ import Footer from './components/Footer'
 function App() {
   // the currently logged in user will be stored up here in state
   const [currentUser, setCurrentUser] = useState(null)
+  const [bio, setBio] = useState('')
   // useEffect -- if the user navigates away form the page, we will log them back in
   useEffect(() => {
     // check to see if token is in storage
@@ -80,7 +81,7 @@ function App() {
 
           <Route
             path="/profile"
-            element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} />}
+            element={<Profile handleLogout={handleLogout} currentUser={currentUser} setCurrentUser={setCurrentUser} bio={bio} setBio={setBio} />}
           />
           <Route path="/chat-form" element={<ChatForm currentUser={currentUser} />} />
           <Route
