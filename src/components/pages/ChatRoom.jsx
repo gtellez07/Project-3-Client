@@ -92,6 +92,9 @@ export default function ChatRoom(props) {
             console.log(err)
         }
     }
+    useEffect(()=>{
+        console.log(comments, "uo")
+    },[comments])
 
     useEffect(() => {
         socket.emit('join-chat', `${id}`)
