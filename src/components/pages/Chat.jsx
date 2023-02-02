@@ -44,6 +44,7 @@ export default function Chat() {
       })
       setList(searchList)
     } catch (err) {
+      navigate('/error')
       console.warn(err)
     }
   }
